@@ -15,19 +15,12 @@ public final class DiscordWhitelist extends JavaPlugin {
         // print to the console that the plugin has been enabled
         getLogger().info("DiscordWhitelist has been enabled!");
 
-        // read the "secret" property from bot_config.yml
+        // save the default config file if it doesn't exist
         saveDefaultConfig();
-        String secret = getConfig().getString("secret");
-        if (secret == null || secret.isEmpty()) {
-            getLogger().severe("Bot secret is not set in bot_config.yml! Please set it and restart the server.");
-            getServer().getPluginManager().disablePlugin(this);
-        } else {
-            getLogger().info("Bot secret loaded from bot_config.yml");
-        }
 
-        // Initialize the Discord bot with the secret
-//        DiscordBot bot = new DiscordBot(secret, this);
-//        bot.start();
+        // print the config values to the console
+        getLogger().info("Config values:");
+        getLogger().info("token: " + getConfig().getString("token"));
     }
 
     @Override

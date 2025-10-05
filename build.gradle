@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation("net.dv8tion:JDA:$version") { // replace $version with the latest version
+    implementation("net.dv8tion:JDA:6.0.0") { // replace $version with the latest version
         // Optionally disable audio natives to reduce jar size by excluding `opus-java` and `tink`
         exclude module: 'opus-java' // required for encoding audio into opus, not needed if audio is already provided in opus encoding
         exclude module: 'tink' // required for encrypting and decrypting audio
@@ -56,5 +56,29 @@ processResources {
     filteringCharset 'UTF-8'
     filesMatching('plugin.yml') {
         expand props
+    }
+}
+
+
+// do a custom build, and put the file in C:\Users\Alexander\Documents\ServerTest\plugins, removing the old one, and then run a custom command
+tasks.register('copyJarToServer', Copy) {
+    dependsOn(tasks.build)
+    from("build/libs/${rootProject.name}-${version}.jar")
+    into("C:/Users/Alexander/Documents/ServerTest/plugins")
+
+    doFirst {
+        delete file("C:/Users/Alexander/Documents/ServerTest/plugins/${rootProject.name}-${version}.jar")
+    }
+}
+
+// do a custom build, and put the file in C:\Users\Alexander\Documents\ServerTest\plugins, removing the old one, and then run a custom command starting a jar file
+tasks.register('buildAndRunServer') {
+    dependsOn(tasks.build)
+    dependsOn(tasks.named('copyJarToServer'))
+    doLast {
+        exec {
+            workingDir = file("C:/Users/Alexander/Documents/ServerTest")
+            commandLine "java", "-jar", "server.jar", "nogui"
+        }
     }
 }

@@ -1,6 +1,3 @@
-# Ignore all secret files
-bot_secret.json
-
 # User-specific stuff
 .idea/
 
