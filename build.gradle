@@ -15,6 +15,11 @@ repositories {
 }
 
 dependencies {
+    implementation("net.dv8tion:JDA:$version") { // replace $version with the latest version
+        // Optionally disable audio natives to reduce jar size by excluding `opus-java` and `tink`
+        exclude module: 'opus-java' // required for encoding audio into opus, not needed if audio is already provided in opus encoding
+        exclude module: 'tink' // required for encrypting and decrypting audio
+    }
     compileOnly("org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT")
 }
 
