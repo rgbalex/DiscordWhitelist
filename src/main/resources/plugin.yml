@@ -11,6 +11,12 @@ commands:
     usage: /<command>
     permission: discordwhitelist.hello
     permission-message: You do not have permission to use this command.
+  dwadd:
+    description: (testing command) Adds a user to the whitelist
+    usage: /<command> <username>
+    permission: discordwhitelist.add
+    permission-message: You do not have permission to use this command.
+
 permissions:
     discordwhitelist.hello:
         description: Allows the use of the /hello command

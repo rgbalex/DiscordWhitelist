@@ -1,5 +1,6 @@
 package org.rgbalex.discordWhitelist;
 
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 import org.bukkit.command.Command;
@@ -29,6 +30,17 @@ public final class DiscordWhitelist extends JavaPlugin {
 
     }
 
+    /**
+     * Executes a Minecraft command programmatically.
+     *
+     * @param sender       The sender of the command (e.g., a player or console).
+     * @param commandToRun The command to execute (e.g., "say Hello").
+     * @return true if the command was executed successfully, false otherwise.
+     */
+    private boolean executeCommand(CommandSender sender, String commandToRun) {
+        return Bukkit.dispatchCommand(sender, commandToRun);
+    }
+
     // command to print "Hello, World!" as the server in the chat when a user types /hello
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, String label, @NotNull String[] args) {
@@ -36,7 +48,14 @@ public final class DiscordWhitelist extends JavaPlugin {
             sender.sendMessage("Hello, World!");
             return true;
         }
+        if (label.equalsIgnoreCase("dwadd")) {
+            if (args.length != 1) {
+                sender.sendMessage("Usage: /dwadd <username>");
+                return false;
+            }
+            String username = args[0];
+            return executeCommand(sender, "whitelist add " + username);
+        }
         return false;
     }
-
 }
