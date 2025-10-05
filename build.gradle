@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id("xyz.jpenilla.run-paper") version "2.3.1"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = 'org.rgbalex'
@@ -62,12 +63,12 @@ processResources {
 
 // do a custom build, and put the file in C:\Users\Alexander\Documents\ServerTest\plugins, removing the old one, and then run a custom command
 tasks.register('copyJarToServer', Copy) {
-    dependsOn(tasks.build)
-    from("build/libs/${rootProject.name}-${version}.jar")
+    dependsOn(tasks.shadowJar) // Ensure the shadowJar task is run before copying
+    from("build/libs/${rootProject.name}-${version}-all.jar")
     into("C:/Users/Alexander/Documents/ServerTest/plugins")
 
     doFirst {
-        delete file("C:/Users/Alexander/Documents/ServerTest/plugins/${rootProject.name}-${version}.jar")
+        delete file("C:/Users/Alexander/Documents/ServerTest/plugins/${rootProject.name}-${version}-all.jar")
     }
 }
 
