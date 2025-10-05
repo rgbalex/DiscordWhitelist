@@ -1,0 +1,17 @@
+name: DiscordWhitelist
+version: '1.0-SNAPSHOT'
+main: org.rgbalex.discordWhitelist.DiscordWhitelist
+api-version: '1.21'
+load: STARTUP
+authors: [ rgbalex ]
+description: A simple plugin allowing the whitelist to be managed via a Discord Bot
+commands:
+  hello:
+    description: Says hello
+    usage: /<command>
+    permission: discordwhitelist.hello
+    permission-message: You do not have permission to use this command.
+permissions:
+    discordwhitelist.hello:
+        description: Allows the use of the /hello command
+        default: true
